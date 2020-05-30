@@ -1,54 +1,32 @@
 //index.js
 //获取应用实例
-const app = getApp()
+let api = require("../../utils/api1");
+const app = getApp();
 
 Page({
   data: {
     motto: 'Hello World',
-    userInfo: {},
-    hasUserInfo: false,
-    canIUse: wx.canIUse('button.open-type.getUserInfo')
+    swiperList:[],
+    indicatorDots:true,
+    autoPlay:true,
+    productList:[]
   },
-  //事件处理函数
-  bindViewTap: function() {
-    wx.navigateTo({
-      url: '../logs/logs'
-    })
-  },
-  onLoad: function () {
-    if (app.globalData.userInfo) {
+  onLoad:function(){
+    api.swiperListApi().then(res=>{
       this.setData({
-        userInfo: app.globalData.userInfo,
-        hasUserInfo: true
+        swiperList:res
       })
-    } else if (this.data.canIUse){
-      // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
-      // 所以此处加入 callback 以防止这种情况
-      app.userInfoReadyCallback = res => {
+      console.log(this.data.swiperList)
+    }).catch(err=>{
+      console.log(err)
+    }),
+    api.productListApi().then(res=>{
         this.setData({
-          userInfo: res.userInfo,
-          hasUserInfo: true
+          productList:res
         })
-      }
-    } else {
-      // 在没有 open-type=getUserInfo 版本的兼容处理
-      wx.getUserInfo({
-        success: res => {
-          app.globalData.userInfo = res.userInfo
-          this.setData({
-            userInfo: res.userInfo,
-            hasUserInfo: true
-          })
-        }
+        console.log(this.data.productList)
+      }).catch(err=>{
+        console.log(err)
       })
-    }
-  },
-  getUserInfo: function(e) {
-    console.log(e)
-    app.globalData.userInfo = e.detail.userInfo
-    this.setData({
-      userInfo: e.detail.userInfo,
-      hasUserInfo: true
-    })
   }
 })

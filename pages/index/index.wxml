@@ -1,13 +1,25 @@
 <!--index.wxml-->
 <view class="container">
-  <view class="userinfo">
-    <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
-    <block wx:else>
-      <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
-      <text class="userinfo-nickname">{{userInfo.nickName}}</text>
-    </block>
-  </view>
-  <view class="usermotto">
-    <text class="user-motto">{{motto}}</text>
-  </view>
+ <swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoPlay}}" class="banner">
+  <block  wx:for="{{swiperList}}"  wx:key="id">
+  <!-- wk:key="*this",代表在for循环中的item自身，这种表示需要item本身就是一个唯一的字符串或者数字 -->
+    <swiper-item>
+      <image src="{{item.src}}" mode="scaleToFill"></image>
+    </swiper-item>
+  </block>
+ </swiper>
+ <view class="nav_title ">
+  <view class="nav_tit"><text>旅游地点</text></view> 
+  <view> <text>全部景点 》</text> </view>
+ </view>
+ <view class="content">
+  <block wx:for="{{productList}}" wx:key="*this">
+    <adress-item item="{{item}}"></adress-item>
+    <!-- <view class="adrName_item"> 
+       <image src="{{item.img}}" mode="widthFix"></image>
+       <text class="title">{{item.name}}</text>
+       <text class="sum">{{item.sum}}</text>
+    </view> -->
+  </block>
+ </view>
 </view>
