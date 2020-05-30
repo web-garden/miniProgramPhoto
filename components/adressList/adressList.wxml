@@ -1,0 +1,5 @@
+<view class="adrName_item"> 
+  <image src="{{item.img}}" mode="widthFix"></image>
+  <text class="title">{{item.name}}</text>
+  <text class="sum">{{item.sum}}</text>
+</view>
